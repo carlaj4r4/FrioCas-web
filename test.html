@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prueba JavaScript - FRIOCAS</title>
+</head>
+<body>
+    <h1>Prueba de JavaScript</h1>
+    <p>Esta es una página de prueba para verificar si JavaScript funciona.</p>
+    
+    <button onclick="pruebaSimple()" style="
+        background: #007bff;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 16px;
+    ">
+        Probar JavaScript
+    </button>
+    
+    <div id="resultado" style="margin-top: 20px; padding: 10px; background: #f8f9fa; border-radius: 5px;">
+        <p>Resultado aparecerá aquí...</p>
+    </div>
+
+    <script>
+        // Prueba básica de JavaScript
+        console.log('=== PRUEBA BÁSICA ===');
+        document.getElementById('resultado').innerHTML = '<p style="color: green;">✅ JavaScript está funcionando correctamente</p>';
+        
+        function pruebaSimple() {
+            alert('¡Función de prueba ejecutada!');
+            document.getElementById('resultado').innerHTML = '<p style="color: blue;">✅ Función ejecutada correctamente</p>';
+            console.log('Prueba simple ejecutada');
+        }
+    </script>
+</body>
+</html>
