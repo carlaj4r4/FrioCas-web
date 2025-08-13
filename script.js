@@ -1,8 +1,8 @@
-// PRUEBA INICIAL - Verificar que JavaScript funciona
-console.log('=== SCRIPT.JS CARGADO ===');
-alert('JavaScript está funcionando correctamente');
+// FRIOCAS - Sistema de Gestión de Repuestos y Servicios
+console.log('=== FRIOCAS SCRIPT.JS CARGADO ===');
 
-// Función de prueba simple
+// Función de prueba simple (COMENTADA PARA VERSIÓN FINAL)
+/*
 function pruebaSimple() {
     alert('¡Función de prueba ejecutada!');
     console.log('Prueba simple ejecutada correctamente');
@@ -10,6 +10,7 @@ function pruebaSimple() {
 
 // Exportar función al objeto window
 window.pruebaSimple = pruebaSimple;
+*/
 
 // Datos de repuestos (simulación de base de datos)
 let repuestos = [
@@ -488,43 +489,27 @@ function calcularPrecioRepuesto(id) {
 
 // Agregar repuesto al carrito con cantidad específica
 function agregarAlCarritoRepuesto(id) {
-    console.log('Agregando repuesto al carrito, ID:', id);
     const repuesto = repuestos.find(r => r.id === id);
-    if (!repuesto) {
-        console.error('Repuesto no encontrado con ID:', id);
-        return;
-    }
-    console.log('Repuesto encontrado:', repuesto);
+    if (!repuesto) return;
     
     const cantidad = parseInt(document.getElementById(`cantidad-repuesto-${id}`).value) || 1;
-    console.log('Cantidad seleccionada:', cantidad);
     const precioTotal = repuesto.precio * cantidad;
-    console.log('Precio total:', precioTotal);
     
     const itemEnCarrito = carrito.find(item => item.id === id);
-    console.log('Item en carrito:', itemEnCarrito);
     
     if (itemEnCarrito) {
         itemEnCarrito.cantidad += cantidad;
-        console.log('Cantidad actualizada en carrito');
     } else {
         carrito.push({
             ...repuesto,
             cantidad: cantidad
         });
-        console.log('Nuevo item agregado al carrito');
     }
-    console.log('Carrito actual:', carrito);
     
-    console.log('Mostrando notificación...');
     mostrarNotificacion(`${cantidad} ${cantidad === 1 ? 'unidad' : 'unidades'} de ${repuesto.nombre} agregadas al carrito - $${precioTotal.toLocaleString()}`);
-    console.log('Actualizando resumen del carrito...');
     actualizarResumenCarrito();
-    console.log('Actualizando contador del carrito...');
     actualizarContadorCarrito();
-    console.log('Actualizando resumen del carrito modal...');
     actualizarResumenCarritoModal();
-    console.log('Función agregarAlCarritoRepuesto completada');
     
     // Animación del botón
     const btnComprar = document.querySelector(`[onclick="agregarAlCarritoRepuesto(${id})"]`);
@@ -1995,6 +1980,7 @@ window.pruebaSimple = function() {
 };
 
 // Función de prueba para modal de efectivo (COMENTADA PARA VERSIÓN FINAL)
+/*
 window.probarModalEfectivo = function() {
     console.log('=== PRUEBA MODAL EFECTIVO ===');
     alert('Probando modal de efectivo...');
