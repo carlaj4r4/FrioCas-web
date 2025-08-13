@@ -1962,7 +1962,8 @@ window.probarCodigo = function(codigo) {
     console.log('=== FIN PRUEBA ===');
 };
 
-// Función de prueba simple
+// Función de prueba simple (COMENTADA PARA VERSIÓN FINAL)
+/*
 window.pruebaSimple = function() {
     alert('¡Función de prueba ejecutada!');
     console.log('Prueba simple ejecutada correctamente');
@@ -1977,7 +1978,7 @@ window.pruebaSimple = function() {
     }
 };
 
-// Función de prueba para modal de efectivo
+// Función de prueba para modal de efectivo (COMENTADA PARA VERSIÓN FINAL)
 window.probarModalEfectivo = function() {
     console.log('=== PRUEBA MODAL EFECTIVO ===');
     alert('Probando modal de efectivo...');
@@ -2009,6 +2010,7 @@ window.probarModalEfectivo = function() {
         alert('Error: ' + error.message);
     }
 };
+*/
 
 // Función para verificar pago directamente desde el modal
 window.verificarPagoEfectivoDirecto = function() {
