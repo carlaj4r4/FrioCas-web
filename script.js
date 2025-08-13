@@ -2070,25 +2070,43 @@ window.verificarPagoEfectivoDirecto = function() {
                 // Generar y mostrar comprobante
                 const contenido = generarContenidoFactura(factura);
                 
-                // Abrir comprobante en nueva ventana
-                const nuevaVentana = window.open('', '_blank');
-                nuevaVentana.document.write(contenido);
-                nuevaVentana.document.close();
-                nuevaVentana.focus();
+                // Abrir comprobante en nueva ventana con verificación
+                try {
+                    const nuevaVentana = window.open('', '_blank');
+                    if (nuevaVentana && nuevaVentana.document) {
+                        nuevaVentana.document.write(contenido);
+                        nuevaVentana.document.close();
+                        nuevaVentana.focus();
+                    } else {
+                        // Si no se puede abrir nueva ventana, mostrar en la misma
+                        const ventanaActual = window.open('', '_self');
+                        ventanaActual.document.write(contenido);
+                        ventanaActual.document.close();
+                    }
+                } catch (windowError) {
+                    console.error('Error al abrir ventana:', windowError);
+                    // Fallback: mostrar contenido en alerta
+                    alert('Comprobante generado. Revisa tu carpeta de descargas.');
+                }
                 
                 // Mostrar opciones de descarga
-                const opcion = confirm('¿Deseas descargar el comprobante?');
-                if (opcion) {
-                    const blob = new Blob([contenido], { type: 'text/html;charset=utf-8' });
-                    const url = URL.createObjectURL(blob);
-                    const a = document.createElement('a');
-                    a.href = url;
-                    a.download = `FRIOCAS-${factura.numero}.html`;
-                    a.style.display = 'none';
-                    document.body.appendChild(a);
-                    a.click();
-                    document.body.removeChild(a);
-                    URL.revokeObjectURL(url);
+                try {
+                    const opcion = confirm('¿Deseas descargar el comprobante?');
+                    if (opcion) {
+                        const blob = new Blob([contenido], { type: 'text/html;charset=utf-8' });
+                        const url = URL.createObjectURL(blob);
+                        const a = document.createElement('a');
+                        a.href = url;
+                        a.download = `FRIOCAS-${factura.numero}.html`;
+                        a.style.display = 'none';
+                        document.body.appendChild(a);
+                        a.click();
+                        document.body.removeChild(a);
+                        setTimeout(() => URL.revokeObjectURL(url), 1000);
+                    }
+                } catch (downloadError) {
+                    console.error('Error al descargar:', downloadError);
+                    alert('Error al descargar. El comprobante se abrió en una nueva ventana.');
                 }
                 
                 const tipoFacturaText = {
