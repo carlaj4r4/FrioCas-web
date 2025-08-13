@@ -1,6 +1,9 @@
 // FRIOCAS - Sistema de Gestión de Repuestos y Servicios
 console.log('=== FRIOCAS SCRIPT.JS CARGADO ===');
 
+// Variables globales
+let carrito = [];
+
 // Datos de repuestos (simulación de base de datos)
 let repuestos = [
     {
@@ -478,43 +481,27 @@ function calcularPrecioRepuesto(id) {
 
 // Agregar repuesto al carrito con cantidad específica
 function agregarAlCarritoRepuesto(id) {
-    console.log('Intentando agregar repuesto ID:', id);
     const repuesto = repuestos.find(r => r.id === id);
-    if (!repuesto) {
-        console.error('Repuesto no encontrado');
-        return;
-    }
-    console.log('Repuesto encontrado:', repuesto.nombre);
+    if (!repuesto) return;
     
     const cantidad = parseInt(document.getElementById(`cantidad-repuesto-${id}`).value) || 1;
-    console.log('Cantidad:', cantidad);
     const precioTotal = repuesto.precio * cantidad;
-    console.log('Precio total:', precioTotal);
     
     const itemEnCarrito = carrito.find(item => item.id === id);
-    console.log('Item en carrito:', itemEnCarrito);
     
     if (itemEnCarrito) {
         itemEnCarrito.cantidad += cantidad;
-        console.log('Cantidad actualizada');
     } else {
         carrito.push({
             ...repuesto,
             cantidad: cantidad
         });
-        console.log('Nuevo item agregado');
     }
-    console.log('Carrito actual:', carrito);
     
-    console.log('Mostrando notificación...');
     mostrarNotificacion(`${cantidad} ${cantidad === 1 ? 'unidad' : 'unidades'} de ${repuesto.nombre} agregadas al carrito - $${precioTotal.toLocaleString()}`);
-    console.log('Actualizando resumen...');
     actualizarResumenCarrito();
-    console.log('Actualizando contador...');
     actualizarContadorCarrito();
-    console.log('Actualizando modal...');
     actualizarResumenCarritoModal();
-    console.log('Función completada');
     
     // Animación del botón
     const btnComprar = document.querySelector(`[onclick="agregarAlCarritoRepuesto(${id})"]`);
@@ -1584,14 +1571,10 @@ function verCarrito() {
 
 // Cerrar modal del carrito
 function cerrarModalCarrito() {
-    console.log('Cerrando modal del carrito...');
     const modal = document.getElementById('cartModal');
     if (modal) {
         modal.style.display = 'none';
         document.body.style.overflow = 'auto';
-        console.log('Modal del carrito cerrado');
-    } else {
-        console.error('No se encontró el modal del carrito');
     }
 }
 
