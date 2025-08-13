@@ -488,27 +488,43 @@ function calcularPrecioRepuesto(id) {
 
 // Agregar repuesto al carrito con cantidad específica
 function agregarAlCarritoRepuesto(id) {
+    console.log('Agregando repuesto al carrito, ID:', id);
     const repuesto = repuestos.find(r => r.id === id);
-    if (!repuesto) return;
+    if (!repuesto) {
+        console.error('Repuesto no encontrado con ID:', id);
+        return;
+    }
+    console.log('Repuesto encontrado:', repuesto);
     
     const cantidad = parseInt(document.getElementById(`cantidad-repuesto-${id}`).value) || 1;
+    console.log('Cantidad seleccionada:', cantidad);
     const precioTotal = repuesto.precio * cantidad;
+    console.log('Precio total:', precioTotal);
     
     const itemEnCarrito = carrito.find(item => item.id === id);
+    console.log('Item en carrito:', itemEnCarrito);
     
     if (itemEnCarrito) {
         itemEnCarrito.cantidad += cantidad;
+        console.log('Cantidad actualizada en carrito');
     } else {
         carrito.push({
             ...repuesto,
             cantidad: cantidad
         });
+        console.log('Nuevo item agregado al carrito');
     }
+    console.log('Carrito actual:', carrito);
     
+    console.log('Mostrando notificación...');
     mostrarNotificacion(`${cantidad} ${cantidad === 1 ? 'unidad' : 'unidades'} de ${repuesto.nombre} agregadas al carrito - $${precioTotal.toLocaleString()}`);
+    console.log('Actualizando resumen del carrito...');
     actualizarResumenCarrito();
+    console.log('Actualizando contador del carrito...');
     actualizarContadorCarrito();
+    console.log('Actualizando resumen del carrito modal...');
     actualizarResumenCarritoModal();
+    console.log('Función agregarAlCarritoRepuesto completada');
     
     // Animación del botón
     const btnComprar = document.querySelector(`[onclick="agregarAlCarritoRepuesto(${id})"]`);
