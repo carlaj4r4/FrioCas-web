@@ -2067,32 +2067,36 @@ window.verificarPagoEfectivoDirecto = function() {
                     return;
                 }
                 
-                // Generar y mostrar comprobante
+                // Generar contenido del comprobante
                 const contenido = generarContenidoFactura(factura);
                 
-                // Abrir comprobante en nueva ventana con verificación
-                try {
-                    const nuevaVentana = window.open('', '_blank');
-                    if (nuevaVentana && nuevaVentana.document) {
-                        nuevaVentana.document.write(contenido);
-                        nuevaVentana.document.close();
-                        nuevaVentana.focus();
-                    } else {
-                        // Si no se puede abrir nueva ventana, mostrar en la misma
-                        const ventanaActual = window.open('', '_self');
-                        ventanaActual.document.write(contenido);
-                        ventanaActual.document.close();
+                // Preguntar primero si quiere ver el comprobante
+                const verComprobante = confirm('¿Deseas ver el comprobante en una nueva ventana?');
+                
+                if (verComprobante) {
+                    // Abrir comprobante en nueva ventana con verificación
+                    try {
+                        const nuevaVentana = window.open('', '_blank');
+                        if (nuevaVentana && nuevaVentana.document) {
+                            nuevaVentana.document.write(contenido);
+                            nuevaVentana.document.close();
+                            nuevaVentana.focus();
+                        } else {
+                            // Si no se puede abrir nueva ventana, mostrar en la misma
+                            const ventanaActual = window.open('', '_self');
+                            ventanaActual.document.write(contenido);
+                            ventanaActual.document.close();
+                        }
+                    } catch (windowError) {
+                        console.error('Error al abrir ventana:', windowError);
+                        alert('Error al abrir el comprobante. Se procederá solo con la descarga.');
                     }
-                } catch (windowError) {
-                    console.error('Error al abrir ventana:', windowError);
-                    // Fallback: mostrar contenido en alerta
-                    alert('Comprobante generado. Revisa tu carpeta de descargas.');
                 }
                 
-                // Mostrar opciones de descarga
-                try {
-                    const opcion = confirm('¿Deseas descargar el comprobante?');
-                    if (opcion) {
+                // Preguntar si quiere descargar
+                const descargarComprobante = confirm('¿Deseas descargar el comprobante?');
+                if (descargarComprobante) {
+                    try {
                         const blob = new Blob([contenido], { type: 'text/html;charset=utf-8' });
                         const url = URL.createObjectURL(blob);
                         const a = document.createElement('a');
@@ -2103,10 +2107,10 @@ window.verificarPagoEfectivoDirecto = function() {
                         a.click();
                         document.body.removeChild(a);
                         setTimeout(() => URL.revokeObjectURL(url), 1000);
+                    } catch (downloadError) {
+                        console.error('Error al descargar:', downloadError);
+                        alert('Error al descargar el comprobante.');
                     }
-                } catch (downloadError) {
-                    console.error('Error al descargar:', downloadError);
-                    alert('Error al descargar. El comprobante se abrió en una nueva ventana.');
                 }
                 
                 const tipoFacturaText = {
