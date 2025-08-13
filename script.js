@@ -2009,6 +2009,77 @@ window.probarModalEfectivo = function() {
 };
 */
 
+// Función para mostrar comprobante en modal
+function mostrarComprobanteModal(contenido, numeroFactura) {
+    // Crear modal para el comprobante
+    const modalHTML = `
+        <div id="comprobanteModal" style="
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.8);
+            z-index: 10000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        ">
+            <div style="
+                background: white;
+                border-radius: 15px;
+                max-width: 90%;
+                max-height: 90%;
+                overflow: auto;
+                position: relative;
+                box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+            ">
+                <div style="
+                    position: sticky;
+                    top: 0;
+                    background: white;
+                    padding: 20px;
+                    border-bottom: 1px solid #eee;
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                    z-index: 1;
+                ">
+                    <h2 style="margin: 0; color: #007bff;">Comprobante FRIOCAS - ${numeroFactura}</h2>
+                    <button onclick="cerrarComprobanteModal()" style="
+                        background: #dc3545;
+                        color: white;
+                        border: none;
+                        padding: 10px 15px;
+                        border-radius: 5px;
+                        cursor: pointer;
+                        font-size: 16px;
+                    ">✕ Cerrar</button>
+                </div>
+                <div id="comprobanteContent" style="padding: 20px;">
+                    ${contenido}
+                </div>
+            </div>
+        </div>
+    `;
+    
+    // Agregar modal al body
+    document.body.insertAdjacentHTML('beforeend', modalHTML);
+    
+    // Prevenir scroll del body
+    document.body.style.overflow = 'hidden';
+}
+
+// Función para cerrar modal del comprobante
+function cerrarComprobanteModal() {
+    const modal = document.getElementById('comprobanteModal');
+    if (modal) {
+        modal.remove();
+        document.body.style.overflow = 'auto';
+    }
+}
+
 // Función para verificar pago directamente desde el modal
 window.verificarPagoEfectivoDirecto = function() {
     console.log('=== VERIFICACIÓN DIRECTA ===');
@@ -2068,37 +2139,13 @@ window.verificarPagoEfectivoDirecto = function() {
                 }
                 
                 // Generar contenido del comprobante
-                console.log('Generando contenido del comprobante...');
                 const contenido = generarContenidoFactura(factura);
-                console.log('Contenido generado exitosamente');
                 
-                // Preguntar primero si quiere ver el comprobante
-                const verComprobante = confirm('¿Deseas ver el comprobante en una nueva ventana?');
+                // Mostrar comprobante en un modal en la misma página
+                const verComprobante = confirm('¿Deseas ver el comprobante?');
                 
                 if (verComprobante) {
-                    console.log('Abriendo comprobante en nueva ventana...');
-                    // Abrir comprobante en nueva ventana con verificación
-                    try {
-                        const nuevaVentana = window.open('', '_blank');
-                        console.log('Nueva ventana creada:', nuevaVentana);
-                        
-                        if (nuevaVentana && nuevaVentana.document) {
-                            console.log('Escribiendo contenido en la ventana...');
-                            nuevaVentana.document.write(contenido);
-                            nuevaVentana.document.close();
-                            nuevaVentana.focus();
-                            console.log('Ventana abierta exitosamente');
-                        } else {
-                            console.log('No se pudo abrir nueva ventana, usando ventana actual...');
-                            // Si no se puede abrir nueva ventana, mostrar en la misma
-                            const ventanaActual = window.open('', '_self');
-                            ventanaActual.document.write(contenido);
-                            ventanaActual.document.close();
-                        }
-                    } catch (windowError) {
-                        console.error('Error al abrir ventana:', windowError);
-                        alert('Error al abrir el comprobante. Se procederá solo con la descarga.');
-                    }
+                    mostrarComprobanteModal(contenido, factura.numero);
                 }
                 
                 // Preguntar si quiere descargar
@@ -3001,11 +3048,7 @@ function enviarPorEmail(factura, email) {
 
 // Generar contenido HTML de la factura
 function generarContenidoFactura(factura) {
-    console.log('Iniciando generación de contenido...');
-    console.log('Factura recibida:', factura);
-    
-    try {
-        const itemsHTML = factura.items.map(item => `
+    const itemsHTML = factura.items.map(item => `
         <tr>
             <td style="padding: 12px; border-bottom: 1px solid #e0e0e0;">${item.nombre}</td>
             <td style="text-align: center; padding: 12px; border-bottom: 1px solid #e0e0e0; font-weight: 500;">${item.cantidad}</td>
@@ -3477,10 +3520,4 @@ function generarContenidoFactura(factura) {
         </body>
         </html>
     `;
-        console.log('Contenido HTML generado exitosamente');
-        return contenido;
-    } catch (error) {
-        console.error('Error en generarContenidoFactura:', error);
-        throw error;
-    }
 } 
