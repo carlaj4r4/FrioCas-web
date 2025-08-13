@@ -1,17 +1,6 @@
 // FRIOCAS - Sistema de Gestión de Repuestos y Servicios
 console.log('=== FRIOCAS SCRIPT.JS CARGADO ===');
 
-// Función de prueba simple (COMENTADA PARA VERSIÓN FINAL)
-/*
-function pruebaSimple() {
-    alert('¡Función de prueba ejecutada!');
-    console.log('Prueba simple ejecutada correctamente');
-}
-
-// Exportar función al objeto window
-window.pruebaSimple = pruebaSimple;
-*/
-
 // Datos de repuestos (simulación de base de datos)
 let repuestos = [
     {
@@ -489,8 +478,13 @@ function calcularPrecioRepuesto(id) {
 
 // Agregar repuesto al carrito con cantidad específica
 function agregarAlCarritoRepuesto(id) {
+    console.log('Intentando agregar repuesto ID:', id);
     const repuesto = repuestos.find(r => r.id === id);
-    if (!repuesto) return;
+    if (!repuesto) {
+        console.error('Repuesto no encontrado');
+        return;
+    }
+    console.log('Repuesto encontrado:', repuesto.nombre);
     
     const cantidad = parseInt(document.getElementById(`cantidad-repuesto-${id}`).value) || 1;
     const precioTotal = repuesto.precio * cantidad;
