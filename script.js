@@ -3050,12 +3050,15 @@ function generarContenidoFactura(factura) {
                     transform: translate(-50%, -50%) rotate(-15deg);
                     width: 400px;
                     height: 400px;
-                    background: url('./assets/Imagen de WhatsApp 2025-08-07 a las 17.57.01_44e6f86e.jpg') no-repeat center;
-                    background-size: contain;
+                    background: linear-gradient(45deg, #f0f0f0 25%, transparent 25%), 
+                                linear-gradient(-45deg, #f0f0f0 25%, transparent 25%), 
+                                linear-gradient(45deg, transparent 75%, #f0f0f0 75%), 
+                                linear-gradient(-45deg, transparent 75%, #f0f0f0 75%);
+                    background-size: 20px 20px;
+                    background-position: 0 0, 0 10px, 10px -10px, -10px 0px;
                     z-index: 0;
                     pointer-events: none;
-                    opacity: 0.15;
-                    filter: grayscale(100%) brightness(1.2) contrast(0.8);
+                    opacity: 0.1;
                 }
                 
                 .header {
@@ -3380,7 +3383,7 @@ function generarContenidoFactura(factura) {
                 <div class="header">
                     <div class="stamp">PAGADO</div>
                     <div class="logo">
-                        <img src="./assets/Imagen de WhatsApp 2025-08-07 a las 17.57.01_44e6f86e.jpg" alt="FRIOCAS Logo">
+                        <div style="width: 60px; height: 60px; border-radius: 10px; background: linear-gradient(135deg, #007bff, #0056b3); display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; font-size: 24px; box-shadow: 0 4px 15px rgba(0,0,0,0.2);">F</div>
                         <span>FRIOCAS</span>
                     </div>
                     <div class="tagline">Servicios Automotrices de Excelencia</div>
