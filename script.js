@@ -13,7 +13,7 @@ let repuestos = [
         precio: 10500,
         stock: 50,
         descripcion: "Restaura el color, brillo y textura original de plásticos, vinilos y tapizados, protegiéndolos contra desgaste, polvo y rayos UV.",
-        imagen: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=400&h=300&fit=crop",
+        imagen: "./assets/productos/revividor-interiores.jpg",
         marca: "Premium",
         estado: "nuevo"
     },
@@ -3098,22 +3098,19 @@ function generarContenidoFactura(factura) {
                 }
                 
                 .invoice-container::before {
-                    content: '';
+                    content: 'FRIOCAS';
                     position: absolute;
                     top: 50%;
                     left: 50%;
                     transform: translate(-50%, -50%) rotate(-15deg);
-                    width: 400px;
-                    height: 400px;
-                    background: linear-gradient(45deg, #f0f0f0 25%, transparent 25%), 
-                                linear-gradient(-45deg, #f0f0f0 25%, transparent 25%), 
-                                linear-gradient(45deg, transparent 75%, #f0f0f0 75%), 
-                                linear-gradient(-45deg, transparent 75%, #f0f0f0 75%);
-                    background-size: 20px 20px;
-                    background-position: 0 0, 0 10px, 10px -10px, -10px 0px;
+                    font-size: 120px;
+                    font-weight: bold;
+                    color: #f0f0f0;
                     z-index: 0;
                     pointer-events: none;
                     opacity: 0.1;
+                    text-align: center;
+                    white-space: nowrap;
                 }
                 
                 .header {
@@ -3438,7 +3435,7 @@ function generarContenidoFactura(factura) {
                 <div class="header">
                     <div class="stamp">PAGADO</div>
                     <div class="logo">
-                        <div style="width: 60px; height: 60px; border-radius: 10px; background: linear-gradient(135deg, #007bff, #0056b3); display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; font-size: 24px; box-shadow: 0 4px 15px rgba(0,0,0,0.2);">F</div>
+                        <img src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAABAAEDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAUEAEAAAAAAAAAAAAAAAAAAAAA/8QAFQEBAQAAAAAAAAAAAAAAAAAAAAX/xAAUEQEAAAAAAAAAAAAAAAAAAAAA/9oADAMBAAIRAxEAPwCdABmX/9k=" alt="FRIOCAS Logo" style="width: 60px; height: 60px; border-radius: 10px; box-shadow: 0 4px 15px rgba(0,0,0,0.2);">
                         <span>FRIOCAS</span>
                     </div>
                     <div class="tagline">Servicios Automotrices de Excelencia</div>
