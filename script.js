@@ -487,23 +487,34 @@ function agregarAlCarritoRepuesto(id) {
     console.log('Repuesto encontrado:', repuesto.nombre);
     
     const cantidad = parseInt(document.getElementById(`cantidad-repuesto-${id}`).value) || 1;
+    console.log('Cantidad:', cantidad);
     const precioTotal = repuesto.precio * cantidad;
+    console.log('Precio total:', precioTotal);
     
     const itemEnCarrito = carrito.find(item => item.id === id);
+    console.log('Item en carrito:', itemEnCarrito);
     
     if (itemEnCarrito) {
         itemEnCarrito.cantidad += cantidad;
+        console.log('Cantidad actualizada');
     } else {
         carrito.push({
             ...repuesto,
             cantidad: cantidad
         });
+        console.log('Nuevo item agregado');
     }
+    console.log('Carrito actual:', carrito);
     
+    console.log('Mostrando notificación...');
     mostrarNotificacion(`${cantidad} ${cantidad === 1 ? 'unidad' : 'unidades'} de ${repuesto.nombre} agregadas al carrito - $${precioTotal.toLocaleString()}`);
+    console.log('Actualizando resumen...');
     actualizarResumenCarrito();
+    console.log('Actualizando contador...');
     actualizarContadorCarrito();
+    console.log('Actualizando modal...');
     actualizarResumenCarritoModal();
+    console.log('Función completada');
     
     // Animación del botón
     const btnComprar = document.querySelector(`[onclick="agregarAlCarritoRepuesto(${id})"]`);
@@ -1573,8 +1584,15 @@ function verCarrito() {
 
 // Cerrar modal del carrito
 function cerrarModalCarrito() {
-    document.getElementById('cartModal').style.display = 'none';
-    document.body.style.overflow = 'auto';
+    console.log('Cerrando modal del carrito...');
+    const modal = document.getElementById('cartModal');
+    if (modal) {
+        modal.style.display = 'none';
+        document.body.style.overflow = 'auto';
+        console.log('Modal del carrito cerrado');
+    } else {
+        console.error('No se encontró el modal del carrito');
+    }
 }
 
 // Proceder al pago desde el modal del carrito
