@@ -2068,20 +2068,28 @@ window.verificarPagoEfectivoDirecto = function() {
                 }
                 
                 // Generar contenido del comprobante
+                console.log('Generando contenido del comprobante...');
                 const contenido = generarContenidoFactura(factura);
+                console.log('Contenido generado exitosamente');
                 
                 // Preguntar primero si quiere ver el comprobante
                 const verComprobante = confirm('¿Deseas ver el comprobante en una nueva ventana?');
                 
                 if (verComprobante) {
+                    console.log('Abriendo comprobante en nueva ventana...');
                     // Abrir comprobante en nueva ventana con verificación
                     try {
                         const nuevaVentana = window.open('', '_blank');
+                        console.log('Nueva ventana creada:', nuevaVentana);
+                        
                         if (nuevaVentana && nuevaVentana.document) {
+                            console.log('Escribiendo contenido en la ventana...');
                             nuevaVentana.document.write(contenido);
                             nuevaVentana.document.close();
                             nuevaVentana.focus();
+                            console.log('Ventana abierta exitosamente');
                         } else {
+                            console.log('No se pudo abrir nueva ventana, usando ventana actual...');
                             // Si no se puede abrir nueva ventana, mostrar en la misma
                             const ventanaActual = window.open('', '_self');
                             ventanaActual.document.write(contenido);
@@ -2993,7 +3001,11 @@ function enviarPorEmail(factura, email) {
 
 // Generar contenido HTML de la factura
 function generarContenidoFactura(factura) {
-    const itemsHTML = factura.items.map(item => `
+    console.log('Iniciando generación de contenido...');
+    console.log('Factura recibida:', factura);
+    
+    try {
+        const itemsHTML = factura.items.map(item => `
         <tr>
             <td style="padding: 12px; border-bottom: 1px solid #e0e0e0;">${item.nombre}</td>
             <td style="text-align: center; padding: 12px; border-bottom: 1px solid #e0e0e0; font-weight: 500;">${item.cantidad}</td>
@@ -3465,4 +3477,10 @@ function generarContenidoFactura(factura) {
         </body>
         </html>
     `;
+        console.log('Contenido HTML generado exitosamente');
+        return contenido;
+    } catch (error) {
+        console.error('Error en generarContenidoFactura:', error);
+        throw error;
+    }
 } 
