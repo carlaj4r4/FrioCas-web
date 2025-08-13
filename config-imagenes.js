@@ -27,7 +27,7 @@ const CONFIG_IMAGENES = {
 };
 
 // Función para obtener imagen con fallback
-function obtenerImagen(ruta, fallback = "https://via.placeholder.com/400x300?text=Imagen+No+Disponible") {
+function obtenerImagen(ruta, fallback = "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=400&h=300&fit=crop") {
     return ruta || fallback;
 }
 

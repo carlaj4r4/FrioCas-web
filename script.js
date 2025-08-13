@@ -13,7 +13,7 @@ let repuestos = [
         precio: 10500,
         stock: 50,
         descripcion: "Restaura el color, brillo y textura original de plásticos, vinilos y tapizados, protegiéndolos contra desgaste, polvo y rayos UV.",
-        imagen: "./assets/productos/revividor-interiores.jpg",
+        imagen: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=400&h=300&fit=crop",
         marca: "Premium",
         estado: "nuevo"
     },
@@ -1398,7 +1398,7 @@ function cargarRepuestos(listaRepuestos = repuestos) {
     
     grid.innerHTML = listaRepuestos.map(repuesto => `
         <div class="repuesto-card">
-            <img src="${repuesto.imagen}" alt="${repuesto.nombre}" class="repuesto-image" onerror="this.src='https://via.placeholder.com/400x300?text=Imagen+No+Disponible'">
+            <img src="${repuesto.imagen}" alt="${repuesto.nombre}" class="repuesto-image" onerror="this.src='https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=400&h=300&fit=crop'">
             <div class="repuesto-content">
                 <div class="repuesto-badges">
                     <span class="repuesto-badge marca">${repuesto.marca}</span>
